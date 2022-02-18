@@ -12,57 +12,55 @@ import SnapKit
 
 class ContactsCell: UITableViewCell {
     
-    lazy var titleImage: UIImageView = {
+    lazy var contactImage: UIImageView = {
         let view = UIImageView()
         view.layer.masksToBounds = true
-        view.layer.cornerRadius = 5
+        view.layer.cornerRadius = 16
         return view
     }()
     
-    lazy var titleName: UILabel = {
+    lazy var contactName: UILabel = {
         let view = UILabel()
-        view.font = .systemFont(ofSize: 15)
-        view.numberOfLines = 0
+        view.font = .systemFont(ofSize: 14, weight: .semibold)
+        view.textColor = UIColor(red: 15/255, green: 24/255, blue: 40/255, alpha: 1)
         return view
     }()
     
-    lazy var titleDescription: UILabel = {
+    lazy var contactLastSeen: UILabel = {
         let view = UILabel()
-        view.font = .systemFont(ofSize: 10)
-        view.textColor = UIColor(red: 51/255, green: 60/255, blue: 68/255, alpha: 1)
-        view.numberOfLines = 0
+        view.font = .systemFont(ofSize: 14, weight: .semibold)
+        view.textColor = UIColor(red: 173/255, green: 181/255, blue: 189/255, alpha: 1)
         return view
     }()
     
     lazy var border: UIView = {
         let view = UIView()
-        view.backgroundColor = .darkGray
+        view.backgroundColor = UIColor(red: 237/255, green: 237/255, blue: 237/255, alpha: 1)
         return view
     }()
     
     override func layoutSubviews() {
         
-        addSubview(titleImage)
-        titleImage.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(5)
+        addSubview(contactImage)
+        contactImage.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.height.width.equalTo(90)
+            make.height.equalToSuperview().multipliedBy(0.6)
+            make.width.equalTo(frame.height * 0.6)
+            make.left.equalToSuperview().inset(frame.width * 0.05)
         }
         
-        addSubview(titleName)
-        titleName.snp.makeConstraints { make in
-            make.left.equalTo(titleImage.snp.right).offset(10)
-            make.top.equalToSuperview().offset(5)
-            make.right.equalToSuperview().offset(-10)
-            make.height.equalTo(40)
+        addSubview(contactName)
+        contactName.snp.makeConstraints { make in
+            make.left.equalTo(contactImage.snp.right).offset(14)
+            make.top.equalTo(contactImage.snp.top)
+            make.height.equalToSuperview().multipliedBy(0.29)
         }
         
-        addSubview(titleDescription)
-        titleDescription.snp.makeConstraints { make in
-            make.left.equalTo(titleImage.snp.right).offset(10)
-            make.top.equalTo(titleName.snp.bottom).offset(5)
-            make.right.equalToSuperview().offset(-5)
-            make.bottom.equalToSuperview().offset(-6)
+        addSubview(contactLastSeen)
+        contactLastSeen.snp.makeConstraints { make in
+            make.left.equalTo(contactImage.snp.right).offset(14)
+            make.bottom.equalTo(contactImage.snp.bottom)
+            make.height.equalToSuperview().multipliedBy(0.29)
         }
         
         addSubview(border)
@@ -70,7 +68,7 @@ class ContactsCell: UITableViewCell {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-1)
             make.height.equalTo(1)
-            make.width.equalToSuperview().multipliedBy(0.97)
+            make.width.equalToSuperview().inset(frame.width * 0.05)
         }
     }
 }

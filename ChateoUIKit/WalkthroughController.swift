@@ -33,13 +33,14 @@ class WalkthroughController: UIViewController {
         return view
     }()
     
-    private lazy var startMessagingButton: UIButton = {
-        let view = UIButton()
+    private lazy var startMessagingButton: RoundButton = {
+        let view = RoundButton()
         view.setTitle("Start Messaging", for: .normal)
         view.titleLabel!.font = .systemFont(ofSize: 16, weight: .semibold)
         view.titleLabel?.textColor = UIColor(red: 247/255, green: 247/255, blue: 252/255, alpha: 1)
         view.backgroundColor = UIColor(red: 0/255, green: 45/255, blue: 227/255, alpha: 1)
-        view.layer.cornerRadius = 30
+//        view.layer.cornerRadius = view.bounds.height / 2
+        view.addTarget(nil, action: #selector(Verification), for: .touchUpInside)
         return view
     }()
     
@@ -48,7 +49,7 @@ class WalkthroughController: UIViewController {
         setupViews()
     }
     
-    func setupViews(){
+    private func setupViews(){
         
         view.backgroundColor = .white
         
@@ -56,7 +57,8 @@ class WalkthroughController: UIViewController {
         illustration.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(-view.frame.height / 2)
             make.centerX.equalToSuperview().offset(5)
-            make.height.equalToSuperview().dividedBy(3)
+            make.height.equalToSuperview().multipliedBy(0.334)
+            make.width.equalTo(view.frame.height * 0.332)
         }
         
         view.addSubview(mainLabel)
@@ -67,16 +69,30 @@ class WalkthroughController: UIViewController {
         
         view.addSubview(startMessagingButton)
         startMessagingButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(view.frame.height * (-0.065))
-            make.left.right.equalToSuperview().inset(view.frame.width * 0.065)
-            make.height.equalToSuperview().multipliedBy(0.065)
+            make.bottom.equalToSuperview().offset(view.frame.height * (-0.04))
+            make.left.right.equalToSuperview().inset(view.frame.width * 0.066)
+            make.height.equalToSuperview().multipliedBy(0.066)
         }
         
         view.addSubview(termsAndPrivacyLabel)
         termsAndPrivacyLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(startMessagingButton.snp.top).offset(-18)
+            make.bottom.equalTo(startMessagingButton.snp.top).offset(view.frame.height * (-0.025))
             make.centerX.equalToSuperview()
         }
+    }
+    
+    @objc func Verification(sender: UIButton) {
+        if sender.titleLabel?.text == "Start Messaging"{
+            navigationController?.pushViewController(VerificationController(), animated: true)
+        }
+    }
+}
+
+class RoundButton: UIButton {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        layer.cornerRadius = bounds.height / 2
     }
 }
 
